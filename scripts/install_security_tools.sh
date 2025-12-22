@@ -6,10 +6,10 @@ echo "🔧 Installing security tools..."
 # ---------------------------
 # Install Syft (official Anchore installer)
 # ---------------------------
-SYFT_VERSION="0.94.0"
+SYFT_VERSION="1.39.0"
 
 echo "📦 Installing Syft v${SYFT_VERSION}"
-curl -sSfL https://get.anchore.io/syft | sudo sh -s -- -b /usr/local/bin "v${SYFT_VERSION}"
+curl -sSfL https://get.anchore.io/syft | sudo sh -s -- -b /usr/local/bin "${SYFT_VERSION}"
 syft --version
 
 # ---------------------------
@@ -24,8 +24,8 @@ curl -sSfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/htm
 # ---------------------------
 echo "🐳 Pulling Docker images"
 
-docker pull anchore/grype:0.80.0
-docker pull ghcr.io/gitleaks/gitleaks:v8.18.2
+docker pull anchore/grype:latest
+docker pull ghcr.io/gitleaks/gitleaks:v8.30
 docker pull sonarqube:latest
 
 echo "✅ Security tools installed successfully"
