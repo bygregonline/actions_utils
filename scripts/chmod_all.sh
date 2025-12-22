@@ -17,6 +17,8 @@ chmod +x \
   stop.sh \
   trivy-to-md.sh \
   trivy-to-md-full.sh \
-  whoami_summary.sh
+  whoami_summary.sh \
+  display_message.sh \
+  docker_ls.sh
 
 echo "✅ All scripts are now executable"
