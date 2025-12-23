@@ -1,6 +1,6 @@
 # 🚀 GitHub Actions Helper Scripts
 
-![Pipeline Banner](https://via.placeholder.com/1200x300?text=GitHub+Actions+Security+%26+Quality+Pipeline)
+![Pipeline Banner](https://raw.githubusercontent.com/bygregonline/actions_utils/refs/heads/main/header.png)
 
 ![Bash](https://img.shields.io/badge/language-bash-black?logo=gnu-bash)
 ![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-blue?logo=github-actions)
