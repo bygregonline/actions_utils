@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START_TIME=$(./elapsed.sh elapsed.sh GET_TIME)
+START_TIME=$(./elapsed.sh .pipeline_start_marker GET_TIME)
 DISK=$(df -h | grep '/dev/root' | awk '{print $5 " of " $2}')
 MEM=$(free -h | awk '/Mem:/ {print $3 " of " $2}')
 

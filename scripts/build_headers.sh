@@ -1,5 +1,7 @@
 #!/bin/bash
 
+touch .pipeline_start_marker
+
 START_TIME=$(date +"%Y-%m-%d %H:%M:%S")
 TRIGGER_USER=${GITHUB_TRIGGERING_ACTOR:-${GITHUB_ACTOR:-unknown}}
 OS_USER=$(whoami)
