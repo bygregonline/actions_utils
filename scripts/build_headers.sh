@@ -8,7 +8,7 @@ OS_USER=$(whoami)
   echo "</br>" >> "$GITHUB_STEP_SUMMARY"
   echo "</br>" >> "$GITHUB_STEP_SUMMARY"
   echo "---" >> "$GITHUB_STEP_SUMMARY"
-  echo "\n" >> "$GITHUB_STEP_SUMMARY"
+  echo "</br>" >> "$GITHUB_STEP_SUMMARY"
 
   echo '```'
   echo "⏰ Starting at: $START_TIME"
