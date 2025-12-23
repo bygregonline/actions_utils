@@ -10,5 +10,6 @@
   echo ""
   echo "📦 Directory listing:"
   ls -la
+  ls -la src/
   echo '```'
 } >> "$GITHUB_STEP_SUMMARY"
