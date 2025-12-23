@@ -1,7 +1,7 @@
 #!/bin/bash
 
 {
-  echo "```"
+  echo '```'
   echo "👤 User:"
   whoami
   echo ""
@@ -10,5 +10,5 @@
   echo ""
   echo "📦 Directory listing:"
   ls -la
-  echo "```"
+  echo '```'
 } >> "$GITHUB_STEP_SUMMARY"
