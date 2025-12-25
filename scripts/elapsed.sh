@@ -25,7 +25,7 @@ seconds=$((time_diff % 60))
 elapsed_time="$minutes:$seconds"
 
 if [ "$get_time" == "GET_TIME" ]; then
-    echo "$elapsed_time"
+    echo "$minutes:$seconds minutes:seconds"
 else
     {
       echo "<br/><br/><br/><br/><br/><br/>"
