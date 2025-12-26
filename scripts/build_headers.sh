@@ -9,18 +9,18 @@ OS_USER=$(whoami)
 {
   echo "#### 🛡️ CI/CD Security & Compliance Overview"
   echo " "
-  echo "![SLSA](https://img.shields.io/badge/SLSA-aligned-blue)"
-  echo "![NIST](https://img.shields.io/badge/NIST-SSDF%20%7C%20800--53-blue)"
-  echo "![ISO](https://img.shields.io/badge/ISO-27001%20aligned-blue)"
-  echo "![EO14028](https://img.shields.io/badge/EO-14028-blue)"
-  echo "![OWASP](https://img.shields.io/badge/OWASP-Top%2010%20%7C%20ASVS-blue)"
-  echo "![CIS](https://img.shields.io/badge/CIS-Controls%20v8-blue)"
-  echo "![OpenSSF](https://img.shields.io/badge/OpenSSF-Best%20Practices-blue)"
-  echo "![SOC2](https://img.shields.io/badge/SOC%202-Technical%20Controls-blue)"
-  echo "![PCI](https://img.shields.io/badge/PCI--DSS-v4.0-blue)"
-  echo "![HIPAA](https://img.shields.io/badge/HIPAA-Technical%20Safeguards-blue)"
-  echo "![FedRAMP](https://img.shields.io/badge/FedRAMP-Technical%20Alignment-blue)"
-  echo "![EU CRA](https://img.shields.io/badge/EU-CRA%20Ready-blue)"
+echo "![SLSA](https://img.shields.io/badge/SLSA-aligned-green) \
+![NIST](https://img.shields.io/badge/NIST-SSDF%20%7C%20800--53-green) \
+![ISO](https://img.shields.io/badge/ISO-27001%20aligned-green) \
+![EO14028](https://img.shields.io/badge/EO-14028-green) \
+![OWASP](https://img.shields.io/badge/OWASP-Top%2010%20%7C%20ASVS-green) \
+![CIS](https://img.shields.io/badge/CIS-Controls%20v8-green) \
+![OpenSSF](https://img.shields.io/badge/OpenSSF-Best%20Practices-green) \
+![SOC2](https://img.shields.io/badge/SOC%202-Technical%20Controls-green) \
+![PCI](https://img.shields.io/badge/PCI--DSS-v4.0-green) \
+![HIPAA](https://img.shields.io/badge/HIPAA-Technical%20Safeguards-green) \
+![FedRAMP](https://img.shields.io/badge/FedRAMP-Technical%20Alignment-green) \
+![EU%20CRA](https://img.shields.io/badge/EU-CRA%20Ready-green)"
 
   echo " "
   echo "#### 🔐 Security & Compliance Alignment"
