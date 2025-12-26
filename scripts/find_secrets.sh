@@ -21,13 +21,14 @@ FINDINGS_COUNT=$(jq '. | length' gitleaks-report.json)
 # If no vulnerabilities found
 if [[ "$FINDINGS_COUNT" -eq 0 ]]; then
   echo "### ✅ No Secrets Detected" >> "$GITHUB_STEP_SUMMARY"
-  echo "🟢 **Everything looks good!**" >> "$GITHUB_STEP_SUMMARY"
+  echo "#####  🟢 **Everything looks good!**" >> "$GITHUB_STEP_SUMMARY"
+  echo "  " >> $GITHUB_STEP_SUMMARY
+  echo "  "  >> $GITHUB_STEP_SUMMARY
+  echo " ✅ Gitleaks did not detect any secrets or sensitive information in this repository." >> "$GITHUB_STEP_SUMMARY"
   echo "" >> "$GITHUB_STEP_SUMMARY"
-  echo "Gitleaks did not detect any secrets or sensitive information in this repository." >> "$GITHUB_STEP_SUMMARY"
-  echo "" >> "$GITHUB_STEP_SUMMARY"
-  echo "| Status | Result |" >> "$GITHUB_STEP_SUMMARY"
-  echo "|--------|--------|" >> "$GITHUB_STEP_SUMMARY"
-  echo "| 🔐 Security Scan | ✅ Clean |" >> "$GITHUB_STEP_SUMMARY"
+  echo "| Status | Result |" >> $GITHUB_STEP_SUMMARY"
+  echo "|--------|--------|" >> $GITHUB_STEP_SUMMARY"
+  echo "| 🔐 Security Scan | ✅ Clean |" >> $GITHUB_STEP_SUMMARY
 
 else
     cat gitleaks-report.md >> $GITHUB_STEP_SUMMARY
