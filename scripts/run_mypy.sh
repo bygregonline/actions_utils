@@ -21,7 +21,7 @@ echo "" >> "$GITHUB_STEP_SUMMARY"
 
 # Si no hay errores
 if [[ "$EXIT_CODE" -eq 0 ]]; then
-  echo "✅ No type errors found by mypy." >> "$GITHUB_STEP_SUMMARY"
+  echo "#### ✅ No type errors found by mypy." >> "$GITHUB_STEP_SUMMARY"
   exit 0
 fi
 

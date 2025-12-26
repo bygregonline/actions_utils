@@ -22,6 +22,7 @@ chmod +x \
   install_security_tools.sh \
   run_mypy.sh \
   find_secrets.sh \
+  show_containers.sh \
   docker_ls.sh
 
 echo "✅ All scripts are now executable"
