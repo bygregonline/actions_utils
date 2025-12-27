@@ -28,20 +28,24 @@ echo "![SLSA](https://img.shields.io/badge/SLSA-aligned-green) \
   echo "This CI/CD pipeline provides **continuous security assurance** and is aligned with"
   echo "**industry-recognized security and compliance frameworks**, including:"
   echo " "
-  echo "- ###### **SLSA (Supply-chain Levels for Software Artifacts)**"
-  echo "- ###### **NIST Secure Software Development Framework (SSDF – SP 800-218)**"
-  echo "- ###### **NIST SP 800-53 (selected technical controls)**"
-  echo "- ###### **ISO/IEC 27001 (Secure SDLC & Vulnerability Management alignment)**"
-  echo "- ###### **U.S. Executive Order 14028 (Software Supply Chain Security)**"
-  echo "- ###### **OWASP Top 10 & OWASP ASVS (automated verification coverage)**"
-  echo "- ###### **CIS Critical Security Controls v8**"
-  echo "- ###### **OpenSSF Best Practices**"
-  echo "- ###### **SOC 2 (Security & Confidentiality – technical controls support)**"
-  echo "- ###### **PCI-DSS v4.0 (Secure SDLC & vulnerability scanning support)**"
-  echo "- ###### **HIPAA Security Rule (technical safeguards – partial)**"
-  echo "- ###### **FedRAMP / FISMA (technical control alignment – partial)**"
-  echo "- ###### **EU Cyber Resilience Act (CRA – supply chain readiness)**"
-  echo " "
+  cat <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+  #### 🔐 Security & Compliance Alignment
+
+  - ###### **SLSA (Supply-chain Levels for Software Artifacts)**
+  - ###### **NIST Secure Software Development Framework (SSDF – SP 800-218)**
+  - ###### **NIST SP 800-53 (selected technical controls)**
+  - ###### **ISO/IEC 27001 (Secure SDLC & Vulnerability Management alignment)**
+  - ###### **U.S. Executive Order 14028 (Software Supply Chain Security)**
+  - ###### **OWASP Top 10 & OWASP ASVS (automated verification coverage)**
+  - ###### **CIS Critical Security Controls v8**
+  - ###### **OpenSSF Best Practices**
+  - ###### **SOC 2 (Security & Confidentiality – technical controls support)**
+  - ###### **PCI-DSS v4.0 (Secure SDLC & vulnerability scanning support)**
+  - ###### **HIPAA Security Rule (technical safeguards – partial)**
+  - ###### **FedRAMP / FISMA (technical control alignment – partial)**
+  - ###### **EU Cyber Resilience Act (CRA – supply chain readiness)**
+
+  EOF
   echo "> *Note: ⚠️ *Alignment indicates technical support and evidence generation."
   echo "> This does not imply formal certification or regulatory approval.*"
 
