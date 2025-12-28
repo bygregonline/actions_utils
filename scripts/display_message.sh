@@ -5,3 +5,6 @@
   else
     echo "#### ⛔ It must stop the pipeline at production " >> $GITHUB_STEP_SUMMARY
   fi
+
+
+  > Policy enforced: **High / Critical vulnerabilities block production**
