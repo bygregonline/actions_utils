@@ -33,9 +33,12 @@ Before using the scripts in your pipeline, ensure they are executable. You can u
 | :--- | :--- | :--- |
 | **`install_security_tools.sh`** | Installs **Syft**, **Trivy**, and pulls Docker images for **Grype**, **Gitleaks**, and **SonarQube**. | N/A |
 | **`run_bandit.sh`** | Runs **Bandit** (Python SAST) on a target directory. Generates HTML/JSON reports and appends a summary table to the GitHub UI. | `$1`: Target path (default: `python/fastapi`) |
-| **`run_gitleaks.sh`** | Runs **Gitleaks** via Docker to detect hardcoded secrets. Converts the JSON report to Markdown. | `MAX_GITHUB_LEVELS` (Log verbosity) |
+| **`find_secrets.sh`** | Runs **Gitleaks** via Docker to detect hardcoded secrets. Enhanced version with better reporting and artifact generation. | `MAX_GITHUB_LEVELS` (Log verbosity) |
+| **`run_gitleaks.sh`** | Legacy Gitleaks runner (use `find_secrets.sh` instead). | `MAX_GITHUB_LEVELS` (Log verbosity) |
 | **`run_mypy.sh`** | Runs **MyPy** for static type checking. Parses the output into a Markdown table for the summary. | `$1`: Target path (default: `python`) |
-| **`trivy-to-md.sh`** | Converts **Trivy** JSON results to Markdown, highlighting **High** and **Critical** vulnerabilities with badges. | `$1`: Input JSON, `$2`: Output MD, `$3`: Image Title |
+| **`run_trivy.sh`** | Runs **Trivy** container image scanning with comprehensive reporting (JSON, HTML, Markdown). | `AMAZON_LINUX_TAR`, `AMAZON_LINUX_CONTAINER` |
+| **`build_grype_syft_report.sh`** | Generates SBOM using **Syft** and scans with **Grype**. Creates SARIF, JSON, and Markdown reports. | N/A |
+| **`trivy-to-md.sh`** | Converts **Trivy** JSON/SARIF results to Markdown, highlighting **High** and **Critical** vulnerabilities. | `$1`: Input file, `$2`: Output MD, `$3`: Image Title |
 | **`trivy-to-md-full.sh`** | Similar to above, but generates a full report of all vulnerabilities found. | Same as above |
 
 ### 📊 Testing & Coverage
@@ -44,6 +47,13 @@ Before using the scripts in your pipeline, ensure they are executable. You can u
 | :--- | :--- | :--- |
 | **`run_coverage.sh`** | Sets up a Python environment (using `uv`), runs `pytest` with coverage, and generates badges/reports. Checks if coverage meets a minimum threshold. | `MIN_COVERAGE` (default: 80) |
 
+### 🐳 Container & Infrastructure
+
+| Script | Description |
+| :--- | :--- |
+| **`show_containers.sh`** | Builds Docker containers and displays them in a formatted table. Calls `docker_ls.sh` internally. |
+| **`docker_ls.sh`** | Lists currently available Docker images in a Markdown table format. |
+
 ### 📝 Reporting & Utilities
 
 | Script | Description |
@@ -51,10 +61,12 @@ Before using the scripts in your pipeline, ensure they are executable. You can u
 | **`build_headers.sh`** | Generates a standardized header for the Step Summary containing the start time, triggering user, and working directory. |
 | **`display_elapsed.sh`** | Calculates execution time, disk usage, and memory usage, appending it to the summary. |
 | **`display_message.sh`** | Appends a generic "Success" or "Stop Pipeline" message based on the input argument (`0` for success). |
+| **`display_strategy_overview.sh`** | Displays a comprehensive table explaining the security scanning strategy and tool roles. |
 | **`consolidate_summary.sh`** | Aggregates multiple step summary files into a single Markdown file (useful for artifact upload). |
-| **`docker_ls.sh`** | Lists currently available Docker images in a Markdown table format. |
+| **`upload_to_bucket.sh`** | Creates a timestamped ZIP artifact with all reports and uploads metadata to S3. Requires repo, stage, and bucket parameters. |
 | **`stop.sh`** | Writes a "Process Stopped" message to the summary and forces an exit code `1` to fail the pipeline. |
 | **`whoami_summary.sh`** | Debugging tool that lists files in the current directory and `src/` to the summary. |
+| **`chmod_all.sh`** | Makes all scripts in the directory executable. |
 
 ### 🔄 Converters (Internal Helpers)
 
@@ -89,8 +101,25 @@ jobs:
       - name: Install Tools
         run: ./scripts/install_security_tools.sh
 
+      - name: Security Strategy Overview
+        run: ./scripts/display_strategy_overview.sh
+
+      - name: Build Containers
+        run: ./scripts/show_containers.sh
+
       - name: Run Secret Detection
-        run: ./scripts/run_gitleaks.sh
+        run: ./scripts/find_secrets.sh
+        env:
+          MAX_GITHUB_LEVELS: -100
+
+      - name: Run Container Scan
+        run: ./scripts/run_trivy.sh
+        env:
+          AMAZON_LINUX_CONTAINER: "amazonlinux:latest"
+          AMAZON_LINUX_TAR: "amazon-linux.tar"
+
+      - name: Run SBOM Analysis
+        run: ./scripts/build_grype_syft_report.sh
 
       - name: Run Python SAST
         run: ./scripts/run_bandit.sh python/src
@@ -102,6 +131,9 @@ jobs:
         run: ./scripts/run_coverage.sh
         env:
           MIN_COVERAGE: 85
+
+      - name: Upload Artifacts
+        run: ./scripts/upload_to_bucket.sh myrepo dev my-security-bucket
 ```
 
 ## 🖼️ Output Examples
@@ -116,11 +148,19 @@ These scripts are designed to populate the **Job Summary** page in GitHub Action
 ### Coverage
 > ##### Coverage: 🟩 92% covered, 🟥 8% uncovered
 
-### 🛡️ Vulnerability Report (Syft / Grype / Trivy)
+### 🛡️ Vulnerability Reports
+
+#### Trivy Container Scan
+> | Package | Vulnerability | Severity | Installed | Fixed |
+> |---------|---------------|----------|-----------|-------|
+> | `openssl` | `CVE-2022-0778` | **CRITICAL** | `1.1.1n` | `1.1.1o` |
+> | `curl` | `CVE-2022-27776` | **HIGH** | `7.81.0` | `7.83.0` |
+
+#### SBOM Analysis (Syft + Grype)
 > | Package | Version | Severity | ID | Title |
 > |:---|:---|:---|:---|:---|
-> | `openssl` | `1.1.1n` | 🔴 CRITICAL | CVE-2022-0778 | Infinite loop in BN_mod_sqrt() |
-> | `curl` | `7.81.0` | 🟠 HIGH | CVE-2022-27776 | Credential leak |
+> | `requests` | `2.25.1` | 🔴 CRITICAL | CVE-2023-32681 | Proxy-Authorization header leak |
+> | `pillow` | `8.3.2` | 🟠 HIGH | CVE-2022-22817 | Buffer overflow |
 
 ### ⏱️ Execution Summary (Elapsed Time)
 > | Metric | Value |
@@ -130,6 +170,14 @@ These scripts are designed to populate the **Job Summary** page in GitHub Action
 > | **Duration** | `5m 23s` |
 > | **Disk Usage** | `14 GB / 30 GB (46%)` |
 > | **Memory** | `2.1 GB / 7 GB` |
+
+### ☁️ Artifact Upload Summary
+> | Field | Value |
+> | :--- | :--- |
+> | **Artifact name** | `security-artifacts-myrepo-20231027-100523-12345-abc1234.zip` |
+> | **AWS S3 Path** | `/myrepo/dev/20231027/security-artifacts-myrepo-20231027-100523-12345-abc1234.zip` |
+> | **Size** | `2.3M` |
+> | **Policy** | High / Critical block production |
 
 ---
 
