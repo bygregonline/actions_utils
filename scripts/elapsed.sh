@@ -31,8 +31,7 @@ else
       echo "</br></br></br>"
       echo "---"
       echo "### 🏁 GitHub Actions took $minutes:$seconds minutes:seconds to complete."
-      echo " </br>"
-      echo "#Digital signature"
+      echo "##### 🔏 Digital signature"
     } >> "$GITHUB_STEP_SUMMARY"
     cat '```' >> $GITHUB_STEP_SUMMARY
     cat artifact-manifest.txt >> $GITHUB_STEP_SUMMARY
