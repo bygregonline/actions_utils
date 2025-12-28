@@ -28,10 +28,15 @@ if [ "$get_time" == "GET_TIME" ]; then
     echo "$minutes:$seconds minutes:seconds"
 else
     {
-      echo "<br/><br/><br/><br/><br/><br/>"
+      echo "</br></br></br>"
       echo "---"
-      echo "🏁 GitHub Actions took $minutes:$seconds minutes:seconds to complete."
+      echo "### 🏁 GitHub Actions took $minutes:$seconds minutes:seconds to complete."
+      echo " </br>"
+      echo "#Digital signature"
     } >> "$GITHUB_STEP_SUMMARY"
+    cat '```' >> $GITHUB_STEP_SUMMARY
+    cat artifact-manifest.txt >> $GITHUB_STEP_SUMMARY
+    cat '```' >> $GITHUB_STEP_SUMMARY
 
     echo "$elapsed_time"
 fi
