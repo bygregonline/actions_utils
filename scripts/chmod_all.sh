@@ -24,6 +24,7 @@ chmod +x \
   find_secrets.sh \
   show_containers.sh \
   build_grype_syft_report.sh \
+  display_strategy_overview.sh \
   docker_ls.sh
 
 echo "✅ All scripts are now executable"
