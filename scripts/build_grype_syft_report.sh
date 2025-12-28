@@ -52,7 +52,7 @@ if [[ "$VULNERABILITIES_COUNT" -eq 0 ]]; then
 echo " " >> $GITHUB_STEP_SUMMARY
 echo "| Msg | Value |" >> $GITHUB_STEP_SUMMARY
 echo "|--------|--------|" >> $GITHUB_STEP_SUMMARY
-echo "| 📊 Vulnerabilities found | 0 |" >> $GITHUB_STEP_SUMMARY
+echo "| 📊 Vulnerabilities found | **0** |" >> $GITHUB_STEP_SUMMARY
 echo "| ✅ Status | **OK** |" >> $GITHUB_STEP_SUMMARY
 
 
@@ -73,15 +73,14 @@ echo " " >> $GITHUB_STEP_SUMMARY
 
 VULNERABILITIES_COUNT=$(jq '[.runs[]?.results[]? | select(.message.text | test("^A (high|critical)"))] | length' sbom-src-report.sarif)
 
-echo "$VULNERABILITIES_COUNT vulnerabilities found" >> $GITHUB_STEP_SUMMARY
-echo $VULNERABILITIES_COUNT
+
 
 if [[ "$VULNERABILITIES_COUNT" -eq 0 ]]; then
 
 echo " " >> $GITHUB_STEP_SUMMARY
 echo "| Msg | Value |" >> $GITHUB_STEP_SUMMARY
 echo "|--------|--------|" >> $GITHUB_STEP_SUMMARY
-echo "| 📊 Vulnerabilities found | 0 |" >> $GITHUB_STEP_SUMMARY
+echo "| 📊 Vulnerabilities found | **0** |" >> $GITHUB_STEP_SUMMARY
 echo "| ✅ Status | **OK** |" >> $GITHUB_STEP_SUMMARY
 
 
