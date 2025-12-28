@@ -34,7 +34,9 @@ else
       echo "##### 🔏 Digital signature"
     } >> "$GITHUB_STEP_SUMMARY"
     cat '```' >> $GITHUB_STEP_SUMMARY
+    echo " " >> $GITHUB_STEP_SUMMARY
     cat artifact-manifest.txt >> $GITHUB_STEP_SUMMARY
+    echo " " >> $GITHUB_STEP_SUMMARY
     cat '```' >> $GITHUB_STEP_SUMMARY
 
     echo "$elapsed_time"
