@@ -26,6 +26,7 @@ chmod +x \
   build_grype_syft_report.sh \
   display_strategy_overview.sh \
   upload_to_bucket.sh \
+  run_trivy.sh \
   docker_ls.sh
 
 echo "✅ All scripts are now executable"
